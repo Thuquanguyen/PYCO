@@ -1,3 +1,1 @@
-const BASE_URL = "https://randomuser.me/api/";
-
-const LAST_URL = "/?randomapi";
+const BASE_URL = "https://randomuser.me/api/0.4/?randomapi";
