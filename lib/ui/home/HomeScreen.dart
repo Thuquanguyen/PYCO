@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.error != null) {
-            return Center(child: Text("An error occurred, please try again!"));
+            return _selectedIndex == 0
+                ? Center(child: Text("An error occurred, please try again!"))
+                : FavoriteScreen();
           } else {
             return PageStorage(
                 bucket: _bucket,
