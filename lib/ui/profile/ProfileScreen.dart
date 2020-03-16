@@ -5,27 +5,20 @@ import 'package:flutter_app_pyco/ui/ProfileItem.dart';
 
 class ProfileScreen extends StatelessWidget {
   // MARK: - VARIABLE
-  static const routerName = "/profile"; // Create router for Profile page
+  static const routerName = "/profile";
 
-  // MARK: LIFE CYCLE
   @override
   Widget build(BuildContext context) {
-    final inherited = ProfileInherited.of(context);
-    final Profile profile = inherited.profile;
+    var inherited = ProfileInherited.of(context);
+    Profile profile = inherited.profile;
+
     final height = MediaQuery
         .of(context)
         .size
         .height;
-
     return Container(
       margin: EdgeInsets.only(top: height / 10),
-      child: Center(
-        child: ProfileItem(profile: profile),
-      ),
+      child: ProfileItem(profile: profile),
     );
   }
-
-// MARK: - FUNCTION
-
-// MARK: - ACTION
 }

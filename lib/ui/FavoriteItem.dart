@@ -9,12 +9,15 @@ class FavoriteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: ListTile(
         title: Text(profile.first),
         subtitle: Text(profile.email),
-        leading: AspectRatio(
-            aspectRatio: 1, child: Image.network(profile.picture, width: 100)),
+        leading: AspectRatio(aspectRatio: 1, child: FadeInImage.assetNetwork(
+          placeholder: 'assets/images/image_none.jpg',
+          image: profile.picture,
+        )),
         trailing: IconButton(
             icon: Icon(Icons.favorite, color: Colors.red), onPressed: null),
       ),

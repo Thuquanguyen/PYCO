@@ -8,13 +8,20 @@ import 'package:flutter_app_pyco/repo/ProfileRepo.dart';
 import 'package:flutter_app_pyco/utils/Toast.dart';
 
 class ProfileRepoImpl extends BlocBase with ProfileRepo {
+
+  ProfileRepoImpl._internal();
+
+  static final ProfileRepoImpl _instance = ProfileRepoImpl._internal();
+
+  static ProfileRepoImpl get instance => _instance;
+
   final StreamController<Profile> _streamController =
-      StreamController.broadcast();
+  StreamController.broadcast();
 
   Stream<Profile> get profileStream => _streamController.stream;
 
   final StreamController<List<Profile>> _favoriteController =
-      StreamController.broadcast();
+  StreamController.broadcast();
 
   Stream<List<Profile>> get favoriteStream => _favoriteController.stream;
 

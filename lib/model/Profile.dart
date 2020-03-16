@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class Profile {
   String seed;
@@ -26,29 +25,8 @@ class Profile {
   String version;
 
   Profile(
-      {@required this.seed,
-      @required this.cell,
-      @required this.dob,
-      @required this.email,
-      @required this.gender,
-      @required this.city,
-      @required this.state,
-      @required this.street,
-      @required this.zip,
-      @required this.md5,
-      @required this.first,
-      @required this.last,
-      @required this.title,
-      @required this.password,
-      @required this.phone,
-      @required this.picture,
-      @required this.registered,
-      @required this.sSN,
-      @required this.salt,
-      @required this.sha1,
-      @required this.sha256,
-      @required this.username,
-      @required this.version});
+      {this.seed, this.cell, this.dob, this.email, this.gender, this.city, this.state, this.street, this.zip, this.md5,
+        this.first, this.last, this.title, this.password, this.phone, this.picture, this.registered, this.sSN, this.salt, this.sha1, this.sha256, this.username, this.version});
 
   Map<String, dynamic> toMap() {
     return {
