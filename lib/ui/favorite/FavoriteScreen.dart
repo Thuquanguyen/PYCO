@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_pyco/bloc/BlocProvider.dart';
 import 'package:flutter_app_pyco/data/ProfileRepoImpl.dart';
 import 'package:flutter_app_pyco/model/Profile.dart';
 import 'package:flutter_app_pyco/ui/FavoriteItem.dart';
@@ -14,21 +13,20 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   // MARK: - VARIABLE
-  ProfileRepoImpl bloc;
+  ProfileRepoImpl _bloc = ProfileRepoImpl.instance;
 
   // MARK: LIFE CYCLE
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    bloc = BlocProvider.of<ProfileRepoImpl>(context);
-    bloc.getProfilesFavorite();
+    _bloc.getProfilesFavorite();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Profile>>(
-      stream: bloc.favoriteStream,
+      stream: _bloc.favoriteStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
