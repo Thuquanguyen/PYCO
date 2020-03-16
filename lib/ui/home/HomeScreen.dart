@@ -105,7 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
   // Create func setup Bottom NavigationBar
   Widget _bottomNavigationBar(int selectedIndex) =>
       BottomNavigationBar(
-          onTap: (int index) => setState(() => _selectedIndex = index),
+          onTap: (int index) {
+            if (index == 1) {
+              _bloc.getProfilesFavorite();
+            }
+            setState(() => _selectedIndex = index);
+          },
           type: BottomNavigationBarType.fixed,
           currentIndex: selectedIndex,
           items: _items);
@@ -114,25 +119,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _checkTabNavigator(String title) =>
       _selectedIndex == 0 ? Center(child: Text(title)) : FavoriteScreen();
 
+  // Func call bloc
   void _callBloc() {
     _bloc.getProfileByLocation(BASE_URL);
   }
 
+  // Func save profile to data local
   void _saveFavorite(Profile profile) {
     _bloc.saveProfile(profile);
   }
 
+  // Func Check connection network
   bool checkConnected() {
     switch (_source.keys.toList()[0]) {
       case ConnectivityResult.none:
-        {
-          return false;
-        }
+        return false;
       case ConnectivityResult.mobile:
       case ConnectivityResult.wifi:
-        {
-          return true;
-        }
+        return true;
     }
     return true;
   }
