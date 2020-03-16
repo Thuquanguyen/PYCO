@@ -45,23 +45,27 @@ class _ProfileItemState extends State<ProfileItem> {
     final height = MediaQuery.of(context).size.height;
 
     return Card(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(20 * 667 / height),
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Container(
-            height: height / 1.8,
+            height: (height / 1.8) * (667 / height),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(width: width),
                 _setupImage(width, height),
-                SizedBox(height: 20),
+                SizedBox(height: 20 * 667 / height),
                 Text(listTitle[indexTitle],
-                    style: TextStyle(color: Colors.black26, fontSize: 20)),
-                SizedBox(height: 10),
+                    style: TextStyle(
+                        color: Colors.black26, fontSize: 20 * 375 / width)),
+                SizedBox(height: 10 * 667 / height),
                 Text(listContent[indexTitle],
-                    style: TextStyle(color: Colors.black, fontSize: 25),
+                    style: TextStyle(
+                        color: Colors.black, fontSize: 25 * 375 / width),
                     textAlign: TextAlign.center),
                 Flexible(
-                    child: _setupBottomBar())
+                    child: _setupBottomBar(width))
               ],
             )));
   }
@@ -80,7 +84,7 @@ class _ProfileItemState extends State<ProfileItem> {
           Align(
             alignment: Alignment.center,
             child: Container(
-                margin: EdgeInsets.only(top: 20),
+                margin: EdgeInsets.only(top: 20 * 667 / height),
                 width: width / 2.5,
                 height: width / 2.5,
                 decoration: new BoxDecoration(
@@ -93,9 +97,10 @@ class _ProfileItemState extends State<ProfileItem> {
         ],
       );
 
-  Widget _setupBottomBar() =>
+  Widget _setupBottomBar(double width) =>
       Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
+        margin: EdgeInsets.only(
+            left: 20 * 375 / width, right: 20 * 375 / width),
         child: GridView.builder(
             itemBuilder: (context, index) {
               return GestureDetector(
