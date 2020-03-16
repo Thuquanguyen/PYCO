@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // MARK: - VARIABLE
-  final List<Widget> _pages = [
+  final List<Widget> _pages = <Widget>[
     ProfileScreen(),
     FavoriteScreen()
   ]; // Create list navigationbar
@@ -37,9 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Map _source = {ConnectivityResult.none: false};
 
-  AppConnectivity _connectivity = AppConnectivity.instance;
+  AppConnectivity _connectivity = AppConnectivity
+      .instance; // Create app provider check Connnection
 
-  bool isConnected = false;
+  bool isConnected = false; // Check connection netwwork
+
+  var delta = 0; // Create variable delta use Get to know the user swiping left or right
 
   ProfileRepoImpl _bloc = ProfileRepoImpl.instance;
 
@@ -53,9 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _connectivity.connectStream.listen((source) {
       setState(() => _source = source);
     });
+    _callBloc();
   }
-
-  var delta = 0;
 
   @override
   void dispose() {
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
-        body: StreamBuilder<Profile>(
+        body: PageStorage(bucket: _bucket, child: StreamBuilder<Profile>(
           stream: _bloc.profileStream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -91,12 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ProfileInherited(
                     profile: snapshot.data,
                     child: isConnected
-                        ? _pages[_selectedIndex]
+                        ? IndexedStack(children: _pages, index: _selectedIndex)
                         : _checkTabNavigator("Network dissconnect")),
               );
             }
           },
-        ));
+        )));
   }
 
   // MARK: - FUNCTION
@@ -104,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _bottomNavigationBar(int selectedIndex) =>
       BottomNavigationBar(
           onTap: (int index) => setState(() => _selectedIndex = index),
+          type: BottomNavigationBarType.fixed,
           currentIndex: selectedIndex,
           items: _items);
 
@@ -128,7 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
       case ConnectivityResult.mobile:
       case ConnectivityResult.wifi:
         {
-          _callBloc();
           return true;
         }
     }
