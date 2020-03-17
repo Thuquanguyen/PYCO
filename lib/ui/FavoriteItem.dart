@@ -14,10 +14,16 @@ class FavoriteItem extends StatelessWidget {
       child: ListTile(
         title: Text(profile.first),
         subtitle: Text(profile.email),
-        leading: AspectRatio(aspectRatio: 1, child: FadeInImage.assetNetwork(
-          placeholder: 'assets/images/image_none.jpg',
-          image: profile.picture,
-        )),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(MediaQuery
+              .of(context)
+              .size
+              .width / 2),
+          child: FadeInImage.assetNetwork(
+            placeholder: 'assets/images/image_none.jpg',
+            image: profile.picture,
+          ),
+        ),
         trailing: IconButton(
             icon: Icon(Icons.favorite, color: Colors.red), onPressed: null),
       ),

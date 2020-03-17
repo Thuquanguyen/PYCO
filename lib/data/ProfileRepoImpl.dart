@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_app_pyco/bloc/BlocBase.dart';
 import 'package:flutter_app_pyco/data/local/ProfileDAO.dart';
 import 'package:flutter_app_pyco/data/remote/ProfileAPI.dart';
 import 'package:flutter_app_pyco/model/Profile.dart';
+import 'package:flutter_app_pyco/model/ProfileFromApi.dart';
 import 'package:flutter_app_pyco/repo/ProfileRepo.dart';
 import 'package:flutter_app_pyco/utils/Toast.dart';
 
@@ -73,6 +75,16 @@ class ProfileRepoImpl extends BlocBase with ProfileRepo {
       await profileLocal.insert(_profile);
       showToast("Người dùng đã được thêm vào mục yêu thích");
     }
+  }
+
+  List<ProfileFromApi> parseJosn(String response) {
+    if (response == null) {
+      return [];
+    }
+    final parsed =
+    json.decode(response.toString()).cast<Map<String, dynamic>>();
+    return parsed.map<ProfileFromApi>((json) =>
+    new ProfileFromApi.fromJson(json)).toList();
   }
 
   @override
