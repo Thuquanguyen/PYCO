@@ -17,8 +17,14 @@ class ProfileScreen extends StatelessWidget {
         .size
         .height;
     return Container(
-      margin: EdgeInsets.only(top: height / 10),
-      child: ProfileItem(profile: profile),
+      child: Stack(
+        children: <Widget>[
+          Container(height: height / 4, color: Colors.black),
+          Container(
+              child: ProfileItem(profile: profile),
+              padding: EdgeInsets.only(top: height / 10))
+        ],
+      ),
     );
   }
 }

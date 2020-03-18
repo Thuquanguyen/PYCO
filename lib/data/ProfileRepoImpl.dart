@@ -39,7 +39,7 @@ class ProfileRepoImpl extends BlocBase with ProfileRepo {
     } else {
       _streamController.sink.add(profile);
     }
-    print("Profile : ${profile.username}\nProfile : ${profile.picture}");
+    print("Profile : ${profile.username}\nProfile : ${profile.large}");
   }
 
   @override
@@ -61,7 +61,7 @@ class ProfileRepoImpl extends BlocBase with ProfileRepo {
         first: profile.first,
         last: profile.last,
         title: profile.title,
-        picture: profile.picture);
+        large: profile.large);
     List<Profile> profiles = await profileLocal.queryAllStation();
     int count = 0;
     for (var item in profiles) {

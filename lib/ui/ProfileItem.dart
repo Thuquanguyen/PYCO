@@ -92,7 +92,7 @@ class _ProfileItemState extends State<ProfileItem> {
                     image: new DecorationImage(
                         fit: BoxFit.fill,
                         image: new NetworkImage(
-                            widget.profile.picture)))),
+                            widget.profile.large)))),
           )
         ],
       );

@@ -1,20 +1,24 @@
-import 'package:flutter_app_pyco/model/Profile.dart';
+import 'Profile.dart';
 
 class ProfileFromApi {
+  Info info;
   List<Result> results;
 
-  ProfileFromApi({this.results});
+  ProfileFromApi({this.info, this.results});
 
   factory ProfileFromApi.fromJson(Map<String, dynamic> json) {
     return ProfileFromApi(
-      results: json['results'] != null
-          ? (json['results'] as List).map((i) => Result.fromJson(i)).toList()
-          : null,
+      info: json['info'] != null ? Info.fromJson(json['info']) : null,
+      results: json['results'] != null ? (json['results'] as List).map((i) =>
+          Result.fromJson(i)).toList() : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.info != null) {
+      data['info'] = this.info.toJson();
+    }
     if (this.results != null) {
       data['results'] = this.results.map((v) => v.toJson()).toList();
     }
@@ -23,113 +27,101 @@ class ProfileFromApi {
 
   Profile toProfile() {
     return Profile(
-        seed: results[0].seed,
-        cell: results[0].user.cell,
-        dob: null,
-        email: results[0].user.email,
-        gender: results[0].user.gender,
-        city: results[0].user.location.city,
-        state: results[0].user.location.state,
-        street: results[0].user.location.street,
-        zip: results[0].user.location.zip,
-        md5: results[0].user.md5,
-        first: results[0].user.name.first,
-        last: results[0].user.name.last,
-        title: results[0].user.name.title,
-        password: results[0].user.password,
-        phone: results[0].user.phone,
-        picture: results[0].user.picture,
-        registered: results[0].user.registered,
-        sSN: results[0].user.sSN,
-        salt: results[0].user.salt,
-        sha1: results[0].user.sha1,
-        sha256: results[0].user.sha256,
-        username: results[0].user.username,
-        version: results[0].version);
+        gender: results[0].gender,
+        title: results[0].name.title,
+        first: results[0].name.first,
+        last: results[0].name.last,
+        street: results[0].location.street,
+        city: results[0].location.city,
+        state: results[0].location.state,
+        postcode: results[0].location.postcode,
+        email: results[0].email,
+        username: results[0].login.username
+        ,
+        password: results[0].login.password,
+        salt: results[0].login.salt,
+        md5: results[0].login.md5,
+        sha1: results[0].login.sha1,
+        sha256: results[0].login.sha256,
+        dob: results[0].dob,
+        registered: results[0].registered,
+        phone: results[0].phone,
+        cell: results[0].cell,
+        name: results[0].id.name,
+        value: results[0].id.value,
+        large: results[0].picture.large,
+        medium: results[0].picture.medium,
+        thumbnail: results[0].picture.thumbnail,
+        nat: results[0].nat,
+        seed: info.seed,
+        results: info.results,
+        page: info.page,
+        version: info.version);
   }
 }
 
-class Result {
+class Info {
+  int page;
+  int results;
   String seed;
-  User user;
   String version;
 
-  Result({this.seed, this.user, this.version});
+  Info({this.page, this.results, this.seed, this.version});
 
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
+  factory Info.fromJson(Map<String, dynamic> json) {
+    return Info(
+      page: json['page'],
+      results: json['results'],
       seed: json['seed'],
-      user: json['user'] != null ? User.fromJson(json['user']) : null,
       version: json['version'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['page'] = this.page;
+    data['results'] = this.results;
     data['seed'] = this.seed;
     data['version'] = this.version;
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
-    }
     return data;
   }
 }
 
-class User {
+class Result {
   String cell;
   String dob;
   String email;
   String gender;
+  Id id;
   Location location;
-  String md5;
+  Login login;
   Name name;
-  String password;
+  String nat;
   String phone;
-  String picture;
+  Picture picture;
   String registered;
-  String sSN;
-  String salt;
-  String sha1;
-  String sha256;
-  String username;
 
-  User(
-      {this.cell,
-      this.dob,
-      this.email,
-      this.gender,
-      this.location,
-      this.md5,
-      this.name,
-      this.password,
-      this.phone,
-      this.picture,
-      this.registered,
-      this.sSN,
-      this.salt,
-      this.sha1,
-      this.sha256,
-      this.username});
+  Result(
+      {this.cell, this.dob, this.email, this.gender, this.id, this.location, this.login, this.name, this.nat, this.phone, this.picture, this.registered});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
       cell: json['cell'],
       dob: json['dob'],
       email: json['email'],
       gender: json['gender'],
-      location:
-          json['location'] != null ? Location.fromJson(json['location']) : null,
-      md5: json['md5'],
+      id: json['id'] != null ? Id.fromJson(json['id']) : null,
+      location: json['location'] != null
+          ? Location.fromJson(json['location'])
+          : null,
+      login: json['login'] != null ? Login.fromJson(json['login']) : null,
       name: json['name'] != null ? Name.fromJson(json['name']) : null,
-      password: json['password'],
+      nat: json['nat'],
       phone: json['phone'],
-      picture: json['picture'],
+      picture: json['picture'] != null
+          ? Picture.fromJson(json['picture'])
+          : null,
       registered: json['registered'],
-      sSN: json['sSN'],
-      salt: json['salt'],
-      sha1: json['sha1'],
-      sha256: json['sha256'],
-      username: json['username'],
     );
   }
 
@@ -139,49 +131,45 @@ class User {
     data['dob'] = this.dob;
     data['email'] = this.email;
     data['gender'] = this.gender;
-    data['md5'] = this.md5;
-    data['password'] = this.password;
+    data['nat'] = this.nat;
     data['phone'] = this.phone;
-    data['picture'] = this.picture;
     data['registered'] = this.registered;
-    data['sSN'] = this.sSN;
-    data['salt'] = this.salt;
-    data['sha1'] = this.sha1;
-    data['sha256'] = this.sha256;
-    data['username'] = this.username;
+    if (this.id != null) {
+      data['id'] = this.id.toJson();
+    }
     if (this.location != null) {
       data['location'] = this.location.toJson();
     }
+    if (this.login != null) {
+      data['login'] = this.login.toJson();
+    }
     if (this.name != null) {
       data['name'] = this.name.toJson();
+    }
+    if (this.picture != null) {
+      data['picture'] = this.picture.toJson();
     }
     return data;
   }
 }
 
-class Location {
-  String city;
-  String state;
-  String street;
-  String zip;
+class Id {
+  String name;
+  String value;
 
-  Location({this.city, this.state, this.street, this.zip});
+  Id({this.name, this.value});
 
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-      city: json['city'],
-      state: json['state'],
-      street: json['street'],
-      zip: json['zip'],
+  factory Id.fromJson(Map<String, dynamic> json) {
+    return Id(
+      name: json['name'],
+      value: json['value'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['street'] = this.street;
-    data['zip'] = this.zip;
+    data['name'] = this.name;
+    data['value'] = this.value;
     return data;
   }
 }
@@ -206,6 +194,91 @@ class Name {
     data['first'] = this.first;
     data['last'] = this.last;
     data['title'] = this.title;
+    return data;
+  }
+}
+
+class Location {
+  String city;
+  int postcode;
+  String state;
+  String street;
+
+  Location({this.city, this.postcode, this.state, this.street});
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      city: json['city'],
+      postcode: json['postcode'],
+      state: json['state'],
+      street: json['street'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['city'] = this.city;
+    data['postcode'] = this.postcode;
+    data['state'] = this.state;
+    data['street'] = this.street;
+    return data;
+  }
+}
+
+class Picture {
+  String large;
+  String medium;
+  String thumbnail;
+
+  Picture({this.large, this.medium, this.thumbnail});
+
+  factory Picture.fromJson(Map<String, dynamic> json) {
+    return Picture(
+      large: json['large'],
+      medium: json['medium'],
+      thumbnail: json['thumbnail'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['large'] = this.large;
+    data['medium'] = this.medium;
+    data['thumbnail'] = this.thumbnail;
+    return data;
+  }
+}
+
+class Login {
+  String md5;
+  String password;
+  String salt;
+  String sha1;
+  String sha256;
+  String username;
+
+  Login(
+      {this.md5, this.password, this.salt, this.sha1, this.sha256, this.username});
+
+  factory Login.fromJson(Map<String, dynamic> json) {
+    return Login(
+      md5: json['md5'],
+      password: json['password'],
+      salt: json['salt'],
+      sha1: json['sha1'],
+      sha256: json['sha256'],
+      username: json['username'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['md5'] = this.md5;
+    data['password'] = this.password;
+    data['salt'] = this.salt;
+    data['sha1'] = this.sha1;
+    data['sha256'] = this.sha256;
+    data['username'] = this.username;
     return data;
   }
 }
