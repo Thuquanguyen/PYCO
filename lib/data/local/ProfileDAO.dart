@@ -19,7 +19,7 @@ class ProfileDao {
   static final String _columnEmail =
       "email"; // Create field location use save location
   static final String _columnPicture =
-      "picture"; // Create field picture use save picture
+      "large"; // Create field picture use save picture
 
   ProfileDao._privateConstructor(); // Create database singleton
   static final ProfileDao instance = ProfileDao._privateConstructor();

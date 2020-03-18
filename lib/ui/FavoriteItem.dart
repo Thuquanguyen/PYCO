@@ -21,7 +21,7 @@ class FavoriteItem extends StatelessWidget {
               .width / 2),
           child: FadeInImage.assetNetwork(
             placeholder: 'assets/images/image_none.jpg',
-            image: profile.picture,
+            image: profile.large,
           ),
         ),
         trailing: IconButton(
