@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_pyco/data/ProfileRepoImpl.dart';
-import 'package:flutter_app_pyco/ui/favorite/FavoriteScreen.dart';
-import 'package:flutter_app_pyco/ui/home/HomeScreen.dart';
-import 'package:flutter_app_pyco/ui/profile/ProfileScreen.dart';
-
-import 'bloc/BlocProvider.dart';
+import 'package:flutter_app_pyco/services/bloc/BlocProvider.dart';
+import 'package:flutter_app_pyco/view_models/PresonViewModel.dart';
+import 'package:flutter_app_pyco/views/HomeScreen.dart';
+import 'package:flutter_app_pyco/views/pages/FavoriteScreen.dart';
+import 'package:flutter_app_pyco/views/pages/ProfileScreen.dart';
 
 main() => runApp(MyApp());
 
@@ -15,7 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  ProfileRepoImpl _bloc = ProfileRepoImpl.instance;
+  PresonViewModel _bloc = PresonViewModel.instance;
 
   @override
   Widget build(BuildContext context) {
